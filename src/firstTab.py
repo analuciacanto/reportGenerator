@@ -31,6 +31,7 @@ def addContent(ws, users):
 
 # Header
 
+
 def addHeaderStyles(ws):
 
     for i in range(1, 12):
@@ -54,17 +55,6 @@ def addHeaderStyles(ws):
 def addContentStyles(ws, users):
     for row in range(2, len(users) + 2):
         for column in range(1, 12):
-            ws.cell(row, column).border = Border(left=Side(border_style='thin', color='00C0C0C0'),
-                                                 right=Side(border_style='thin',
-                                                            color='00C0C0C0'),
-                                                 top=Side(border_style='thin',
-                                                          color='00C0C0C0'),
-                                                 bottom=Side(border_style='thin',
-                                                             color='00C0C0C0'),)
-            ws.cell(row, column).alignment = Alignment(horizontal='left')
-            ws.cell(row, column).font = Font(bold=False,
-                                             size="12", name='Calibri')
-
             if column == 11:
                 if ws.cell(row, column).value == "Preenchido":
                     ws.cell(row, column).fill = PatternFill(start_color='00008000',
@@ -74,8 +64,3 @@ def addContentStyles(ws, users):
                     ws.cell(row, column).fill = PatternFill(start_color='00FF0000',
                                                             end_color='00FF0000',
                                                             fill_type='solid')
-
-            else:
-                ws.cell(row, column).fill = PatternFill(start_color='00F5F5F5',
-                                                        end_color='00F5F5F5',
-                                                        fill_type='solid')

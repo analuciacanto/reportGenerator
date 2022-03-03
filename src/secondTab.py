@@ -39,10 +39,42 @@ def addHeader(ws, users):
     addStyles(ws, header)
 
 
+def getAnswer(index, questions):
+    try:
+        if (questions[str(index)]['value'] != [] or None):
+            return questions[str(index)]['value']
+
+        else:
+            return "--"
+    except KeyError:
+        return "--"
+    else:
+        return "--"
+
+
+def getAnswerList(index, questionIndex, questions, form, ws):
+    try:
+        question = questions[str(questionIndex)]['value']
+        info = ""
+        if (question != None):
+            for i in range(len(question)):
+                if i < len(question) - 1:
+                    info = info + question[i][index]['value'] + "\n"
+                else:
+                    info = info + question[i][index]['value']
+            return info
+
+        else:
+            return "--"
+
+    except KeyError:
+        return "--"
+    else:
+        return "--"
+
+
 def addContent(ws, users):
-    line = 2
     for user in range(len(users)):
-        line = line + 1
         for form in range(len(users[user]["forms"])):
             questions = users[user]["forms"][form]['questions']
             author = users[user]["forms"][form]["author"]
@@ -54,57 +86,25 @@ def addContent(ws, users):
                      ["status"]["title"],	      users[user]["forms"][form]
                      ["approved_date"],	author["first_name"],	     users[user]["forms"][form]
                      ["created"],	     users[user]["forms"][form]
-                     ["approved_date"],	"--",	"--",	"--",	"--",	"--"]
+                     ["approved_date"],	"--",	"--",	"--",	"--",	"--", getAnswer(
+                         0, questions), getAnswer(1, questions), getAnswer(2, questions), "--",
 
-            for i in range(32):
-                try:
-                    if (i == 3 or i == 5 or i == 6):
-                        infos.append("--")
-                        if (questions[str(i)]['value'] == [] and i != 6):
-                            for i in range(4):
-                                infos.append("--")
-                        elif (questions[str(i)]['value'] == [] and i == 6):
-                            for i in range(3):
-                                infos.append("--")
-                        elif (questions[str(i)]['value'] != None):
-                            if i == 6:
-                                name = ""
-                                part = ""
-                                area = ""
-                                for value in questions[str(i)]['value']:
-                                    name = name + value[0]['value'] + "\n"
-                                    part = part + value[1]['value'] + "\n"
-                                    area = area + value[2]['value'] + "\n"
-                                infos.append(name)
-                                infos.append(part)
-                                infos.append(area)
-                            else:
-                                name = ""
-                                office = ""
-                                division = ""
-                                unity = ""
+                     getAnswerList(0, 3, questions, user, ws),  getAnswerList(
+                         1, 3, questions, user, ws),  getAnswerList(2, 3, questions, user, ws), getAnswerList(3, 3, questions, user, ws),
 
-                                for value in questions[str(i)]['value']:
-                                    name = name + value[0]['value'] + "\n"
-                                    office = office + value[1]['value'] + "\n"
-                                    division = division + \
-                                        value[2]['value'] + "\n"
-                                    unity = unity + value[3]['value'] + "\n"
-                                infos.append(name)
-                                infos.append(office)
-                                infos.append(division)
-                                infos.append(unity)
+                     getAnswer(4, questions), "--", getAnswerList(0, 5, questions, user, ws), getAnswerList(
+                         1, 5, questions, user, ws), getAnswerList(2, 5, questions, user, ws), getAnswerList(3, 5, questions, user, ws),
+                     "--", getAnswerList(0, 6, questions, form, ws), getAnswerList(
+                         1, 6, questions, user, ws), getAnswerList(2, 6, questions, user, ws),
+                     getAnswer(7, questions), getAnswer(8, questions), getAnswer(
+                         9, questions), getAnswer(10, questions),
+                     getAnswer(11, questions),  getAnswer(
+                         13, questions), getAnswer(14, questions), getAnswer(15, questions),
+                     getAnswer(16, questions),
+                     getAnswer(18, questions), getAnswer(19, questions), getAnswer(20, questions), getAnswer(21, questions), getAnswer(22, questions), getAnswer(23, questions), getAnswer(24, questions), getAnswer(25, questions), getAnswer(26, questions), getAnswer(27, questions), getAnswer(28, questions), getAnswer(29, questions), getAnswer(30, questions), getAnswer(31, questions), getAnswer(32, questions), ]
 
-                    else:
-                        infos.append(questions[str(i)]['value'])
-
-                except KeyError:
-                    continue
-            addCells(ws, infos)
-
-
-def addCells(ws, infos):
-    ws.append(infos)
+            ws.append(infos)
+            ws.row_dimensions[user - 47].height = 50
 
 
 def mergeCells(ws, startRow, endRow, startColumn, endColumn, initialCell, value, backgroundColor, fontColor, bold, fontSize):
